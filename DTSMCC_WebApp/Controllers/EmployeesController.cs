@@ -28,10 +28,7 @@ namespace DTSMCC_WebApp.Controllers
             SqlCommand commandSql = new SqlCommand();
             commandSql.Connection = connectSql;
             commandSql.CommandText = 
-                "select employees.employeeid, employees.employeename, jobs.jobname " +
-                "from employees " +
-                "join jobs " +
-                "on employees.idjob = jobs.jobid";
+                "select * from employees";
             List<Employees> Employees = new List<Employees>();
             List<Jobs> Jobs = new List<Jobs>();
             
@@ -65,18 +62,16 @@ namespace DTSMCC_WebApp.Controllers
         }
 
         // Read by Id
-        public IActionResult IndexId(int id)
+        public IActionResult Index(int id)
         {
             connectSql = new SqlConnection(connectionString);
             SqlCommand commandSql = new SqlCommand();
             commandSql.Connection = connectSql;
             commandSql.CommandText = 
                 "select " +
-                    "employees.employeeid, employees.employeename, jobs.jobname " +
+                    "employees.employeeid, employees.employeename, employees.idjob " +
                 "from " +
                     "employees " +
-                "join " +
-                    "jobs on employees.idjob = jobs.jobid " +
                 "where " +
                     "employees.employeeid = @id";
 
@@ -96,7 +91,6 @@ namespace DTSMCC_WebApp.Controllers
                         while (readData.Read())
                         {
                             Employees worker = new Employees();
-                            Jobs occupation = new Jobs();
                             worker.EmployeeId = Convert.ToInt32(readData[0]);
                             worker.EmployeeName = (readData[1]).ToString();
                             worker.IdJob = Convert.ToInt32(readData[2]);
