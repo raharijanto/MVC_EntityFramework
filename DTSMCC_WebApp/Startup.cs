@@ -1,6 +1,8 @@
+using DTSMCC_WebApp.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +26,8 @@ namespace DTSMCC_WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddDbContext<MyContext>(option => 
+                option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +55,7 @@ namespace DTSMCC_WebApp
             {
                 endpoints.MapControllerRoute(
                     name:"default",
-                    pattern:"{controller=Employees}/{action=IndexId}/{id?}");
+                    pattern:"{controller=Employees}/{action=Create}/{id?}");
             });
         }
     }
