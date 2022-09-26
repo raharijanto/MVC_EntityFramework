@@ -50,36 +50,46 @@ namespace DTSMCC_WebApp.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View(employees);
+            return View();
         }
 
         // Update
         // - Get
-        public IActionResult Update()
-        {
-            return View();
-        }
         
-        // - Put
-        [HttpPut]
+        // - Post
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(Employees employees)
         {
+            if (ModelState.IsValid)
+            {
+                myContext.Employees.Update(employees);
+                var result = myContext.SaveChanges();
+                if (result > 0)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
             return View();
         }
         
         // Delete
         // - Get
-        public IActionResult Delete()
-        {
-            return View();
-        }
         
         // - Post
-        [HttpDelete]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Employees employees)
         {
+            if (ModelState.IsValid)
+            {
+                myContext.Employees.Remove(employees);
+                var result = myContext.SaveChanges();
+                if (result > 0)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
             return View();
         }
     }
