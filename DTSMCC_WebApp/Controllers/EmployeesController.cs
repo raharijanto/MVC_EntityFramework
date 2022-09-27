@@ -55,6 +55,15 @@ namespace DTSMCC_WebApp.Controllers
 
         // Update
         // - Get
+        public IActionResult Update(int id)
+        {
+            var updResult = myContext.Employees.Find(id);
+            if (updResult == null)
+            {
+                return NotFound();
+            }
+            return View(updResult);
+        }
         
         // - Post
         [HttpPost]
@@ -75,22 +84,24 @@ namespace DTSMCC_WebApp.Controllers
         
         // Delete
         // - Get
+        public IActionResult Delete(int id)
+        {
+            var delResult = myContext.Employees.Find(id);
+            if (delResult == null)
+            {
+                return NotFound();
+            }
+            return View(delResult);
+        }
         
         // - Post
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(Employees employees)
+        [ActionName("Delete")]
+        public IActionResult Deletedone(Employees employees)
         {
-            if (ModelState.IsValid)
-            {
                 myContext.Employees.Remove(employees);
                 var result = myContext.SaveChanges();
-                if (result > 0)
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            return View();
+                return RedirectToAction("Index");
         }
     }
 }

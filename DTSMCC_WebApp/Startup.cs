@@ -55,7 +55,7 @@ namespace DTSMCC_WebApp
             {
                 endpoints.MapControllerRoute(
                     name:"default",
-                    pattern:"{controller=Employees}/{action=Create}/{id?}");
+                    pattern:"{controller=Employees}/{action=Index}/{id?}");
             });
         }
     }
